@@ -17,16 +17,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LaunchIcon" translatesAutoresizingMaskIntoConstraints="NO" id="j9I-DQ-Hhc">
-                                <rect key="frame" x="166" y="396" width="120" height="120"/>
+                                <rect key="frame" x="147" y="393" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="Vgo-Gx-cOl"/>
                                     <constraint firstAttribute="width" constant="120" id="YJb-J1-qs1"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MyHabits" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cvX-nz-CV8">
-                                <rect key="frame" x="183.5" y="762" width="86" height="24"/>
+                                <rect key="frame" x="163" y="762" width="88" height="24"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="88" id="5fr-LQ-3QC"/>
                                     <constraint firstAttribute="height" constant="24" id="Cad-qh-fxr"/>
+                                    <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="yp4-h2-niT"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <color key="textColor" red="0.63137254901960782" green="0.086274509803921567" blue="0.80000000000000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -36,13 +38,10 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="cvX-nz-CV8" secondAttribute="trailing" constant="144.5" id="01X-BT-PHc"/>
+                            <constraint firstItem="j9I-DQ-Hhc" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="4Xu-mt-YNu"/>
+                            <constraint firstItem="cvX-nz-CV8" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="63q-t1-MPg"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="cvX-nz-CV8" secondAttribute="bottom" constant="76" id="JIQ-3d-UIj"/>
-                            <constraint firstItem="j9I-DQ-Hhc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="352" id="mPI-de-aZX"/>
-                            <constraint firstItem="cvX-nz-CV8" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" symbolic="YES" id="qz0-rv-dFf"/>
-                            <constraint firstItem="cvX-nz-CV8" firstAttribute="top" secondItem="j9I-DQ-Hhc" secondAttribute="bottom" constant="246" id="x1a-Cz-x4y"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="j9I-DQ-Hhc" secondAttribute="trailing" constant="128" id="x4g-HZ-kY6"/>
-                            <constraint firstItem="j9I-DQ-Hhc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="166" id="xAY-aX-phM"/>
+                            <constraint firstItem="j9I-DQ-Hhc" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="hdz-7V-MfM"/>
                         </constraints>
                     </view>
                 </viewController>

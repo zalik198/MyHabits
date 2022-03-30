@@ -8,11 +8,24 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
+    
+    let addButton: UIButton = {
+        let addButton = UIButton()
+        
+        return addButton
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+    //MARK: add button in tabBar
+        navigationController?.navigationBar.backgroundColor = .white
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: nil)
+        //navigationController?.navigationItem.titleView?.tintColor = UIColor(red: 161, green: 22, blue: 204, alpha: 1)
+       
+
+
+        
     }
     
 
