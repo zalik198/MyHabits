@@ -18,13 +18,6 @@ class InfoViewController: UIViewController {
         return scrollView
     }()
     
-    let contentView: UIView = {
-        let contentView = UIView()
-        contentView.backgroundColor = .white
-        contentView.toAutoLayout()
-        return contentView
-    }()
-    
     let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.toAutoLayout()
@@ -48,41 +41,26 @@ class InfoViewController: UIViewController {
         
         view.addSubview(scrollView)
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        
-        scrollView.addSubview(contentView)
-        
-        contentView.addSubviews(titleLabel, textView)
+        scrollView.addSubviews(titleLabel, textView)
         
         initialLayout()
-        
     }
-    
     
     //MARK: Initial Layout
     func initialLayout() {
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                                      scrollView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                                      scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-                                     scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 150),
-                                     //При прокрутке вниз не скролистя до конца!Исправить!!!
+                                     scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                                      
-                                     contentView.topAnchor.constraint(equalTo: scrollView.topAnchor),
-                                     contentView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                                     contentView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-                                     contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-                                     contentView.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
-                                     contentView.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-                                     contentView.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-                                     
-                                     titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22),
-                                     titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+                                     titleLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 22),
+                                     titleLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
                                      titleLabel.widthAnchor.constraint(equalToConstant: 218),
                                      titleLabel.heightAnchor.constraint(equalToConstant: 24),
                                      
-                                     textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 62),
-                                     textView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
-                                     textView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16),
-                                     textView.heightAnchor.constraint(equalTo: contentView.heightAnchor)
+                                     textView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 62),
+                                     textView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                                     textView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -16),
                                     ])
     }
     
