@@ -19,10 +19,7 @@ class HabitsViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .white
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(buttonTap))
 
-        
-
-
-        
+    
     }
 
     @objc func buttonTap() {

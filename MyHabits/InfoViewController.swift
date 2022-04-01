@@ -23,7 +23,7 @@ class InfoViewController: UIViewController {
         titleLabel.toAutoLayout()
         titleLabel.text = "Привычка за 21 день"
         titleLabel.contentMode = .scaleAspectFit
-        titleLabel.font = .boldSystemFont(ofSize: 20)
+        titleLabel.font = .systemFont(ofSize: 20, weight: .semibold)
         return titleLabel
     }()
     
