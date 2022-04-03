@@ -9,6 +9,7 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
+    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.toAutoLayout()
@@ -34,6 +35,7 @@ class HabitViewController: UIViewController {
         return habitTextField
     }()
     
+    
     let colorLabel: UILabel = {
         let colorLabel = UILabel()
         colorLabel.toAutoLayout()
@@ -45,54 +47,76 @@ class HabitViewController: UIViewController {
     let pickerButton: UIButton = {
         let pickerButton = UIButton()
         pickerButton.toAutoLayout()
-        //pickerButton.frame.size = CGSize(width: 30, height: 30)
         pickerButton.layer.cornerRadius = 15
         pickerButton.backgroundColor = UIColor(red: 1.00, green: 0.62, blue: 0.31, alpha: 1.00)
         pickerButton.clipsToBounds = true
         pickerButton.addTarget(self, action: #selector(pickerTap), for: .touchUpInside)
-        
         return pickerButton
     }()
     
-    let hourLabel: UILabel = {
-        let hourLabel = UILabel()
-        hourLabel.toAutoLayout()
-        hourLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        hourLabel.text = "ВРЕМЯ"
-        return hourLabel
+    let dateLabel: UILabel = {
+        let dateLabel = UILabel()
+        dateLabel.toAutoLayout()
+        dateLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        dateLabel.text = "ВРЕМЯ"
+        return dateLabel
     }()
     
-    let selectHour: UILabel = {
-        let selectHour = UILabel()
-        selectHour.toAutoLayout()
-        selectHour.font = .systemFont(ofSize: 17)
-        selectHour.text = "Каждый день в "
-        return selectHour
+    let selectDate: UILabel = {
+        let selectDate = UILabel()
+        selectDate.toAutoLayout()
+        selectDate.font = .systemFont(ofSize: 17)
+        selectDate.text = "Каждый день в "
+        return selectDate
     }()
     
-    let hourPicker: UIDatePicker = {
-        let hourPicker = UIDatePicker()
-        hourPicker.toAutoLayout()
-        hourPicker.datePickerMode = .time
-        hourPicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
-        
-        return hourPicker
+    var date: Date = Date() {
+        didSet {
+            let dateformat = DateFormatter()
+            dateformat.dateFormat = "HH:mm a"
+            dateValueLabel.text = dateformat.string(from: date)
+        }
+    }
+    
+    lazy var dateValueLabel: UILabel = {
+        let dateValueLabel = UILabel()
+        dateValueLabel.toAutoLayout()
+        dateValueLabel.font = .systemFont(ofSize: 17, weight: .regular)
+        dateValueLabel.numberOfLines = 1
+        let dateFormat = DateFormatter()
+        dateFormat.dateFormat = "HH:mm a"
+        dateValueLabel.textColor = UIColor(red: 0.63, green: 0.09, blue: 0.80, alpha: 1.00)
+        dateValueLabel.text = dateFormat.string(from: date)
+        return dateValueLabel
+    }()
+    
+  
+    lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.toAutoLayout()
+        datePicker.date = date
+        datePicker.datePickerMode = .time
+        datePicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
+        //datePicker.locale = Locale(identifier: "ru_RU")
+        datePicker.addTarget(self, action: #selector(datePickerTap), for: .valueChanged)
+        return datePicker
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
         view.backgroundColor = .white
         view.addSubview(scrollView)
         
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        scrollView.addSubviews(headlineLabel, habitTextField, colorLabel, pickerButton, hourLabel, selectHour, hourPicker)
+        scrollView.addSubviews(headlineLabel, habitTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker)
         
         initialLayout()
+
     }
     
-    
+
     //MARK: Initial Layout
     func initialLayout() {
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -120,22 +144,25 @@ class HabitViewController: UIViewController {
                                      pickerButton.heightAnchor.constraint(equalToConstant: 30),
                                      pickerButton.widthAnchor.constraint(equalToConstant: 30),
                                      
-                                     hourLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 153),
-                                     hourLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-                                     hourLabel.heightAnchor.constraint(equalToConstant: 18),
-                                     hourLabel.widthAnchor.constraint(equalToConstant: 47),
+                                     dateLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 153),
+                                     dateLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                                     dateLabel.heightAnchor.constraint(equalToConstant: 18),
+                                     dateLabel.widthAnchor.constraint(equalToConstant: 47),
                                      
-                                     selectHour.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 178),
-                                     selectHour.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-                                     selectHour.heightAnchor.constraint(equalToConstant: 22),
-                                     selectHour.widthAnchor.constraint(equalToConstant: 194),
+                                     selectDate.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 178),
+                                     selectDate.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                                     selectDate.heightAnchor.constraint(equalToConstant: 22),
                                      
-                                     hourPicker.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 215),
-                                     hourPicker.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
-                                     hourPicker.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
-                                     hourPicker.heightAnchor.constraint(equalToConstant: 216),
-                                     hourPicker.widthAnchor.constraint(equalToConstant: scrollView.contentSize.width)
+                                     dateValueLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 178),
+                                     dateValueLabel.leadingAnchor.constraint(equalTo: selectDate.trailingAnchor),
+                                     dateValueLabel.heightAnchor.constraint(equalToConstant: 22),
                                      
+                                     
+                                     datePicker.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 215),
+                                     datePicker.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
+                                     datePicker.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
+                                     datePicker.heightAnchor.constraint(equalToConstant: 216),
+                                     datePicker.widthAnchor.constraint(equalToConstant: scrollView.contentSize.width)
                                      
                                     ])
     }
@@ -144,13 +171,19 @@ class HabitViewController: UIViewController {
     @objc func pickerTap() {
         let colorPickerVC = UIColorPickerViewController()
         colorPickerVC.delegate = self
-        //colorPickerVC.isModalInPresentation = true
+        colorPickerVC.selectedColor = pickerButton.backgroundColor!
         present(colorPickerVC, animated: true)
-       
-        
-      
     }
     
+    @objc func datePickerTap( _ sender: UIDatePicker) {
+        date = sender.date
+    }
+    
+    @objc func saveHabit() {
+        
+        self.navigationController?.popViewController(animated: true)
+
+    }
     
 }
 
@@ -158,8 +191,6 @@ extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor
         pickerButton.backgroundColor = color
-
     }
-
 }
 
