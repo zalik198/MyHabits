@@ -19,20 +19,20 @@ class HabitViewController: UIViewController {
         return scrollView
     }()
     
-    let headlineLabel: UILabel = {
-        let headlineLabel = UILabel()
-        headlineLabel.toAutoLayout()
-        headlineLabel.font = .systemFont(ofSize: 13, weight: .semibold)
-        headlineLabel.text = "НАЗВАНИЕ"
-        return headlineLabel
+    let nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.toAutoLayout()
+        nameLabel.font = .systemFont(ofSize: 13, weight: .semibold)
+        nameLabel.text = "НАЗВАНИЕ"
+        return nameLabel
     }()
     
-    let habitTextField: UITextField = {
-        let habitTextField = UITextField()
-        habitTextField.toAutoLayout()
-        habitTextField.font = .systemFont(ofSize: 17, weight: .regular)
-        habitTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
-        return habitTextField
+    let nameTextField: UITextField = {
+        let nameTextField = UITextField()
+        nameTextField.toAutoLayout()
+        nameTextField.font = .systemFont(ofSize: 17, weight: .regular)
+        nameTextField.placeholder = "Бегать по утрам, спать 8 часов и т.п."
+        return nameTextField
     }()
     
     
@@ -85,7 +85,7 @@ class HabitViewController: UIViewController {
         dateValueLabel.numberOfLines = 1
         let dateFormat = DateFormatter()
         dateFormat.dateFormat = "HH:mm a"
-        dateValueLabel.textColor = UIColor(red: 0.63, green: 0.09, blue: 0.80, alpha: 1.00)
+        dateValueLabel.textColor = constPurpleColor
         dateValueLabel.text = dateFormat.string(from: date)
         return dateValueLabel
     }()
@@ -110,7 +110,7 @@ class HabitViewController: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        scrollView.addSubviews(headlineLabel, habitTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker)
+        scrollView.addSubviews(nameLabel, nameTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker)
         
         initialLayout()
 
@@ -124,15 +124,15 @@ class HabitViewController: UIViewController {
                                      scrollView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
                                      scrollView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
                                      
-                                     headlineLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 21),
-                                     headlineLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
-                                     headlineLabel.heightAnchor.constraint(equalToConstant: 18),
-                                     headlineLabel.widthAnchor.constraint(equalToConstant: 74),
+                                     nameLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 21),
+                                     nameLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
+                                     nameLabel.heightAnchor.constraint(equalToConstant: 18),
+                                     nameLabel.widthAnchor.constraint(equalToConstant: 74),
                                      
-                                     habitTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 46),
-                                     habitTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
-                                     habitTextField.heightAnchor.constraint(equalToConstant: 22),
-                                     habitTextField.widthAnchor.constraint(equalToConstant: 295),
+                                     nameTextField.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 46),
+                                     nameTextField.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 15),
+                                     nameTextField.heightAnchor.constraint(equalToConstant: 22),
+                                     nameTextField.widthAnchor.constraint(equalToConstant: 295),
                                      
                                      colorLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 83),
                                      colorLabel.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 16),
@@ -180,6 +180,10 @@ class HabitViewController: UIViewController {
     }
     
     @objc func saveHabit() {
+        
+        let newHabit = Habit(name: nameTextField.text!, date: date /*datePicke.date*/, color: pickerButton.backgroundColor!)
+        let store = HabitsStore.shared
+        store.habits.append(newHabit)
         
         self.navigationController?.popViewController(animated: true)
 

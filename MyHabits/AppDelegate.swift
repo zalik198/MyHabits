@@ -41,8 +41,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = .white
         UINavigationBar.appearance().standardAppearance = appearance
         UINavigationBar.appearance().scrollEdgeAppearance = appearance
-        UINavigationBar.appearance().tintColor = UIColor(red: 0.63, green: 0.09, blue: 0.80, alpha: 1.00)
-        UITabBar.appearance().tintColor = UIColor(red: 0.63, green: 0.09, blue: 0.80, alpha: 1.00)
+        UINavigationBar.appearance().tintColor = constPurpleColor
+        UITabBar.appearance().tintColor = constPurpleColor
+        
+    
         
         
         
