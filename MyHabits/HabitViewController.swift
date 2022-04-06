@@ -90,7 +90,7 @@ class HabitViewController: UIViewController {
         return dateValueLabel
     }()
     
-  
+    
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.toAutoLayout()
@@ -113,10 +113,10 @@ class HabitViewController: UIViewController {
         scrollView.addSubviews(nameLabel, nameTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker)
         
         initialLayout()
-
+        
     }
     
-
+    
     //MARK: Initial Layout
     func initialLayout() {
         NSLayoutConstraint.activate([scrollView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -181,12 +181,13 @@ class HabitViewController: UIViewController {
     
     @objc func saveHabit() {
         
-        let newHabit = Habit(name: nameTextField.text!, date: date /*datePicke.date*/, color: pickerButton.backgroundColor!)
+        let newHabit = Habit(name: nameTextField.text!, date: date, color: pickerButton.backgroundColor!)
         let store = HabitsStore.shared
-        store.habits.append(newHabit)
-        
+        if !store.habits.contains(newHabit) {
+            store.habits.append(newHabit)
+            HabitsViewController.collectionView.reloadData()
+        }
         self.navigationController?.popViewController(animated: true)
-
     }
     
 }

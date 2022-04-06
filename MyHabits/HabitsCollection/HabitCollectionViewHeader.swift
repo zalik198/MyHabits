@@ -20,10 +20,8 @@ class HabitCollectionViewHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         backgroundColor = .white
         addSubview(headerLabel)
-        
         initialLayout()
         
     }
@@ -31,7 +29,6 @@ class HabitCollectionViewHeader: UICollectionReusableView {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
     
     func initialLayout() {
         NSLayoutConstraint.activate([headerLabel.topAnchor.constraint(equalTo: topAnchor, constant: 4),

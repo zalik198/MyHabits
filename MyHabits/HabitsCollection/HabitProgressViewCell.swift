@@ -60,7 +60,8 @@ class HabitProgressViewCell: UICollectionViewCell {
         initialLayout()
     }
     
-    func initialLayout() {NSLayoutConstraint.activate([
+    func initialLayout() {
+        NSLayoutConstraint.activate([
         progressLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
         progressLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
         percentLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
@@ -71,8 +72,7 @@ class HabitProgressViewCell: UICollectionViewCell {
         progressBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
         progressBar.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
         progressBar.heightAnchor.constraint(equalToConstant: 7)
-    ])
-        
+        ])
     }
     
 }
