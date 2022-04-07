@@ -7,9 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		627ADCCF27FCDE9E0055B0B9 /* HabitCollectionViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627ADCCE27FCDE9E0055B0B9 /* HabitCollectionViewHeader.swift */; };
 		627ADCD127FCE7C10055B0B9 /* HabitCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627ADCD027FCE7C10055B0B9 /* HabitCollectionViewCell.swift */; };
 		627ADCD327FCE8310055B0B9 /* HabitProgressViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627ADCD227FCE8310055B0B9 /* HabitProgressViewCell.swift */; };
+		627E060327FF7F0100681F94 /* HabitDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627E060227FF7F0100681F94 /* HabitDetailsViewController.swift */; };
+		627E060927FF8CE800681F94 /* HabitTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627E060827FF8CE800681F94 /* HabitTableViewCell.swift */; };
+		627E060B27FF8D3300681F94 /* HabitTableViewHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 627E060A27FF8D3300681F94 /* HabitTableViewHeader.swift */; };
 		62A30A2E27F3995200A51DFE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A30A2D27F3995200A51DFE /* AppDelegate.swift */; };
 		62A30A3027F3995200A51DFE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A30A2F27F3995200A51DFE /* SceneDelegate.swift */; };
 		62A30A3227F3995200A51DFE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A30A3127F3995200A51DFE /* ViewController.swift */; };
@@ -23,9 +25,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		627ADCCE27FCDE9E0055B0B9 /* HabitCollectionViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewHeader.swift; sourceTree = "<group>"; };
 		627ADCD027FCE7C10055B0B9 /* HabitCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitCollectionViewCell.swift; sourceTree = "<group>"; };
 		627ADCD227FCE8310055B0B9 /* HabitProgressViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitProgressViewCell.swift; sourceTree = "<group>"; };
+		627E060227FF7F0100681F94 /* HabitDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitDetailsViewController.swift; sourceTree = "<group>"; };
+		627E060827FF8CE800681F94 /* HabitTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTableViewCell.swift; sourceTree = "<group>"; };
+		627E060A27FF8D3300681F94 /* HabitTableViewHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HabitTableViewHeader.swift; sourceTree = "<group>"; };
 		62A30A2A27F3995200A51DFE /* MyHabits.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MyHabits.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A30A2D27F3995200A51DFE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		62A30A2F27F3995200A51DFE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -54,12 +58,39 @@
 		627ADCCD27FCDD970055B0B9 /* HabitsCollection */ = {
 			isa = PBXGroup;
 			children = (
-				62A30A4327F3A0B900A51DFE /* HabitsViewController.swift */,
-				627ADCCE27FCDE9E0055B0B9 /* HabitCollectionViewHeader.swift */,
+				62DE26E327F5BDF4007372DE /* HabitViewController.swift */,
 				627ADCD027FCE7C10055B0B9 /* HabitCollectionViewCell.swift */,
 				627ADCD227FCE8310055B0B9 /* HabitProgressViewCell.swift */,
 			);
 			path = HabitsCollection;
+			sourceTree = "<group>";
+		};
+		627E060527FF87C400681F94 /* HabitsDetail */ = {
+			isa = PBXGroup;
+			children = (
+				627E060227FF7F0100681F94 /* HabitDetailsViewController.swift */,
+				627E060827FF8CE800681F94 /* HabitTableViewCell.swift */,
+				627E060A27FF8D3300681F94 /* HabitTableViewHeader.swift */,
+			);
+			path = HabitsDetail;
+			sourceTree = "<group>";
+		};
+		627E060627FF880700681F94 /* NavigationControllers */ = {
+			isa = PBXGroup;
+			children = (
+				62A30A4527F3A0CF00A51DFE /* InfoViewController.swift */,
+				62A30A4327F3A0B900A51DFE /* HabitsViewController.swift */,
+			);
+			path = NavigationControllers;
+			sourceTree = "<group>";
+		};
+		627E060727FF882A00681F94 /* Supports */ = {
+			isa = PBXGroup;
+			children = (
+				62A30A4127F3A05D00A51DFE /* HabitsStore.swift */,
+				62A30A4727F5070800A51DFE /* Support.swift */,
+			);
+			path = Supports;
 			sourceTree = "<group>";
 		};
 		62A30A2127F3995100A51DFE = {
@@ -83,11 +114,10 @@
 			children = (
 				62A30A2D27F3995200A51DFE /* AppDelegate.swift */,
 				62A30A2F27F3995200A51DFE /* SceneDelegate.swift */,
-				62A30A4127F3A05D00A51DFE /* HabitsStore.swift */,
+				627E060627FF880700681F94 /* NavigationControllers */,
 				627ADCCD27FCDD970055B0B9 /* HabitsCollection */,
-				62DE26E327F5BDF4007372DE /* HabitViewController.swift */,
-				62A30A4527F3A0CF00A51DFE /* InfoViewController.swift */,
-				62A30A4727F5070800A51DFE /* Support.swift */,
+				627E060527FF87C400681F94 /* HabitsDetail */,
+				627E060727FF882A00681F94 /* Supports */,
 				62A30A3627F3995500A51DFE /* Assets.xcassets */,
 				62A30A3827F3995500A51DFE /* LaunchScreen.storyboard */,
 				62A30A3B27F3995500A51DFE /* Info.plist */,
@@ -166,16 +196,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				627ADCCF27FCDE9E0055B0B9 /* HabitCollectionViewHeader.swift in Sources */,
 				62A30A4827F5070800A51DFE /* Support.swift in Sources */,
 				62A30A4227F3A05D00A51DFE /* HabitsStore.swift in Sources */,
 				62A30A3227F3995200A51DFE /* ViewController.swift in Sources */,
 				62DE26E427F5BDF5007372DE /* HabitViewController.swift in Sources */,
+				627E060327FF7F0100681F94 /* HabitDetailsViewController.swift in Sources */,
 				62A30A2E27F3995200A51DFE /* AppDelegate.swift in Sources */,
 				62A30A4427F3A0B900A51DFE /* HabitsViewController.swift in Sources */,
 				62A30A4627F3A0CF00A51DFE /* InfoViewController.swift in Sources */,
+				627E060B27FF8D3300681F94 /* HabitTableViewHeader.swift in Sources */,
 				62A30A3027F3995200A51DFE /* SceneDelegate.swift in Sources */,
 				627ADCD327FCE8310055B0B9 /* HabitProgressViewCell.swift in Sources */,
+				627E060927FF8CE800681F94 /* HabitTableViewCell.swift in Sources */,
 				627ADCD127FCE7C10055B0B9 /* HabitCollectionViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

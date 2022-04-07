@@ -97,7 +97,6 @@ class HabitViewController: UIViewController {
         datePicker.date = date
         datePicker.datePickerMode = .time
         datePicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
-        //datePicker.locale = Locale(identifier: "ru_RU")
         datePicker.addTarget(self, action: #selector(datePickerTap), for: .valueChanged)
         return datePicker
     }()
@@ -106,6 +105,7 @@ class HabitViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
+
         view.backgroundColor = .white
         view.addSubview(scrollView)
         
@@ -115,7 +115,6 @@ class HabitViewController: UIViewController {
         initialLayout()
         
     }
-    
     
     //MARK: Initial Layout
     func initialLayout() {
@@ -157,7 +156,7 @@ class HabitViewController: UIViewController {
                                      dateValueLabel.leadingAnchor.constraint(equalTo: selectDate.trailingAnchor),
                                      dateValueLabel.heightAnchor.constraint(equalToConstant: 22),
                                      
-                                     
+
                                      datePicker.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 215),
                                      datePicker.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),

@@ -16,25 +16,25 @@ class HabitsViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 12
         layout.sectionInsetReference = .fromContentInset
-        layout.headerReferenceSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
+        
         layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         return layout
     }()
     
-   static let collectionView: UICollectionView = {
+    static let collectionView: UICollectionView = {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.toAutoLayout()
         collectionView.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
         return collectionView
     }()
     
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         //MARK: add button in tabBar
         navigationController?.navigationBar.backgroundColor = .white
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(buttonTap))
+  
         
         HabitsViewController.collectionView.dataSource = self
         HabitsViewController.collectionView.delegate = self
@@ -43,12 +43,21 @@ class HabitsViewController: UIViewController {
         
         view.addSubview(HabitsViewController.collectionView)
         
-        HabitsViewController.collectionView.register(HabitCollectionViewHeader.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "habitHeader")
         HabitsViewController.collectionView.register(HabitProgressViewCell.self, forCellWithReuseIdentifier: "habitProgress")
         HabitsViewController.collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: "habitViewCell")
         
         initialLayout()
         
+    }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationItem.largeTitleDisplayMode = .always
+        navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
+        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationItem.title = "Сегодня"
+
     }
     
     func initialLayout() {
@@ -60,8 +69,10 @@ class HabitsViewController: UIViewController {
     }
     
     @objc func buttonTap() {
+        self.navigationController?.pushViewController(habitVC, animated: false)
         habitVC.navigationItem.title = "Создать"
-        self.navigationController?.pushViewController(habitVC, animated: true)
+        navigationController?.navigationBar.prefersLargeTitles = false
+        
     }
     
 }
@@ -79,18 +90,10 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.initialProgress()
             return cell
         } else {
-           guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "habitViewCell", for: indexPath) as? HabitCollectionViewCell else { return UICollectionViewCell() }
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "habitViewCell", for: indexPath) as? HabitCollectionViewCell else { return UICollectionViewCell() }
             cell.initialCell(habit: HabitsStore.shared.habits[indexPath.item - 1])
             return cell
         }
-      
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let cell = collectionView.dequeueReusableSupplementaryView(ofKind: kind,
-                                                                         withReuseIdentifier: "habitHeader",
-                                                                         for: indexPath) as? HabitCollectionViewHeader else { return UICollectionReusableView() }
-        return cell
         
     }
     
@@ -102,6 +105,17 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if !(indexPath.item == 0) {
+                  guard let item = collectionView.cellForItem(at: indexPath) as? HabitCollectionViewCell else { return }
+                  
+                  if let habit = item.habit {
+                      navigationController?.pushViewController(HabitDetailsViewController(habit), animated: false)
+                      navigationController?.navigationBar.prefersLargeTitles = false
+
+                  }
+              }
+    }
     
 }
 
