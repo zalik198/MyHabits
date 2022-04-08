@@ -110,8 +110,11 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
                   guard let item = collectionView.cellForItem(at: indexPath) as? HabitCollectionViewCell else { return }
                   
                   if let habit = item.habit {
+
                       navigationController?.pushViewController(HabitDetailsViewController(habit), animated: false)
                       navigationController?.navigationBar.prefersLargeTitles = false
+                      //eventList!.events.sort(by: {$0.eventDate < $1.eventDate})
+
 
                   }
               }

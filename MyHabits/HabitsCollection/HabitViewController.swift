@@ -105,6 +105,7 @@ class HabitViewController: UIViewController {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelHabit))
 
         view.backgroundColor = .white
         view.addSubview(scrollView)
@@ -186,6 +187,10 @@ class HabitViewController: UIViewController {
             store.habits.append(newHabit)
             HabitsViewController.collectionView.reloadData()
         }
+        self.navigationController?.popViewController(animated: true)
+    }
+    
+    @objc func cancelHabit() {
         self.navigationController?.popViewController(animated: true)
     }
     

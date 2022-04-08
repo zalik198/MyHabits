@@ -8,7 +8,7 @@
 import UIKit
 
 class HabitTableViewHeader: UITableViewHeaderFooterView {
-
+    
     let labelActive: UILabel = {
         let labelActive = UILabel()
         labelActive.toAutoLayout()
@@ -17,7 +17,7 @@ class HabitTableViewHeader: UITableViewHeaderFooterView {
         labelActive.textColor = .black
         labelActive.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         labelActive.textColor = UIColor(red: 0.24, green: 0.24, blue: 0.26, alpha: 0.60)
-
+        
         return labelActive
     }()
     
@@ -25,7 +25,6 @@ class HabitTableViewHeader: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         contentView.addSubview(labelActive)
         initialLayout()
-        
         
     }
     
@@ -42,5 +41,5 @@ class HabitTableViewHeader: UITableViewHeaderFooterView {
     }
     
     
-
+    
 }
