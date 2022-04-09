@@ -69,7 +69,8 @@ class HabitDetailsViewController: UIViewController {
     }
     
     @objc func editTap() {
-        
+        navigationController?.pushViewController(HabitViewController(habit), animated: true)
+
     }
     
     @objc func updateTable() {
@@ -94,6 +95,9 @@ extension HabitDetailsViewController: UITableViewDelegate, UITableViewDataSource
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell =  tableView.dequeueReusableCell(withIdentifier: "habitViewCell", for: indexPath) as? HabitTableViewCell else { return UITableViewCell() }
         let date = HabitsStore.shared.dates[indexPath.row]
+    
+
+        
         
         cell.initialEdit(date: date, check: HabitsStore.shared.habit(habit, isTrackedIn: date))
 

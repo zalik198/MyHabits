@@ -10,6 +10,8 @@ import UIKit
 class HabitViewController: UIViewController {
     
     
+    var habit: Habit?
+    
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.toAutoLayout()
@@ -19,7 +21,7 @@ class HabitViewController: UIViewController {
         return scrollView
     }()
     
-    let nameLabel: UILabel = {
+    lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.toAutoLayout()
         nameLabel.font = .systemFont(ofSize: 13, weight: .semibold)
@@ -36,7 +38,7 @@ class HabitViewController: UIViewController {
     }()
     
     
-    let colorLabel: UILabel = {
+    lazy var colorLabel: UILabel = {
         let colorLabel = UILabel()
         colorLabel.toAutoLayout()
         colorLabel.font = .systemFont(ofSize: 13, weight: .semibold)
@@ -96,17 +98,41 @@ class HabitViewController: UIViewController {
         datePicker.toAutoLayout()
         datePicker.date = date
         datePicker.datePickerMode = .time
+        datePicker.locale = Locale(identifier: "en_US")
         datePicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
         datePicker.addTarget(self, action: #selector(datePickerTap), for: .valueChanged)
         return datePicker
     }()
+    
+    init(_ editHabit: Habit?) {
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        //modalPresentationStyle = .fullScreen
+        
+        habit = editHabit
+        if let habitSource = habit {
+            date = habitSource.date
+            pickerButton.backgroundColor = habitSource.color
+            nameTextField.text = habitSource.name
+            //deleteButton.isHidden = false
+            title = "Править"
+        } else {
+            //deleteButton.isHidden = true
+            title = "Создать"
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelHabit))
-
+        
         view.backgroundColor = .white
         view.addSubview(scrollView)
         
@@ -157,7 +183,7 @@ class HabitViewController: UIViewController {
                                      dateValueLabel.leadingAnchor.constraint(equalTo: selectDate.trailingAnchor),
                                      dateValueLabel.heightAnchor.constraint(equalToConstant: 22),
                                      
-
+                                     
                                      datePicker.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 215),
                                      datePicker.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
@@ -181,11 +207,21 @@ class HabitViewController: UIViewController {
     
     @objc func saveHabit() {
         
-        let newHabit = Habit(name: nameTextField.text!, date: date, color: pickerButton.backgroundColor!)
-        let store = HabitsStore.shared
-        if !store.habits.contains(newHabit) {
-            store.habits.append(newHabit)
+        if let myHabit = habit {
+            myHabit.name = nameTextField.text!
+            myHabit.date = date
+            myHabit.color = pickerButton.backgroundColor!
+            HabitsStore.shared.save()
             HabitsViewController.collectionView.reloadData()
+            
+        } else {
+            let newHabit = Habit(name: nameTextField.text!, date: date, color: pickerButton.backgroundColor!)
+            let store = HabitsStore.shared
+            if !store.habits.contains(newHabit) {
+                store.habits.append(newHabit)
+                HabitsViewController.collectionView.reloadData()
+            }
+            
         }
         self.navigationController?.popViewController(animated: true)
     }

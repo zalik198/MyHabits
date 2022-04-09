@@ -9,7 +9,7 @@ import UIKit
 
 class HabitsViewController: UIViewController {
     
-    var habitVC = HabitViewController()
+    //var habitVC = HabitViewController()
     
     static let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
@@ -69,8 +69,8 @@ class HabitsViewController: UIViewController {
     }
     
     @objc func buttonTap() {
-        self.navigationController?.pushViewController(habitVC, animated: false)
-        habitVC.navigationItem.title = "Создать"
+        self.navigationController?.pushViewController(HabitViewController(nil), animated: false)
+        HabitsViewController().navigationItem.title = "Создать"
         navigationController?.navigationBar.prefersLargeTitles = false
         
     }
@@ -108,13 +108,15 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !(indexPath.item == 0) {
                   guard let item = collectionView.cellForItem(at: indexPath) as? HabitCollectionViewCell else { return }
-                  
+            
+        
+            
                   if let habit = item.habit {
 
                       navigationController?.pushViewController(HabitDetailsViewController(habit), animated: false)
                       navigationController?.navigationBar.prefersLargeTitles = false
-                      //eventList!.events.sort(by: {$0.eventDate < $1.eventDate})
 
+                      
 
                   }
               }
