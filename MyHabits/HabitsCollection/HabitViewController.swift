@@ -7,7 +7,7 @@
 
 import UIKit
 
-class HabitViewController: UIViewController {
+class HabitViewController: UIViewController, UITextFieldDelegate {
     
     var habit: Habit?
     
@@ -146,6 +146,11 @@ class HabitViewController: UIViewController {
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
         scrollView.addSubviews(nameLabel, nameTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker, deleteHabitButton)
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapOnView))
+        view.addGestureRecognizer(tapGesture)
+        
+        self.nameTextField.delegate = self
+        
         initialLayout()
     }
     
@@ -211,6 +216,17 @@ class HabitViewController: UIViewController {
     //MARK: target tap datePicker
     @objc func datePickerTap( _ sender: UIDatePicker) {
         date = sender.date
+    }
+    
+    //MARK: tap on view keyboard closed
+    @objc func tapOnView() {
+        nameTextField.resignFirstResponder()
+    }
+    
+    //MARK: tap keyboard button "done" close keyboard
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.view.endEditing(true)
+        return false
     }
     
     //MARK: target save button
