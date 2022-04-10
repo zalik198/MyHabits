@@ -9,6 +9,7 @@ import UIKit
 
 class InfoViewController: UIViewController {
     
+    //MARK: Initial views, labels and buttons
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.toAutoLayout()
@@ -63,7 +64,6 @@ class InfoViewController: UIViewController {
                                      textView.widthAnchor.constraint(equalTo: scrollView.widthAnchor, constant: -16),
                                     ])
     }
-    
 }
 
 

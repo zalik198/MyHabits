@@ -9,7 +9,6 @@ import UIKit
 
 class HabitViewController: UIViewController {
     
-    
     var habit: Habit?
     
     let scrollView: UIScrollView = {
@@ -92,7 +91,6 @@ class HabitViewController: UIViewController {
         return dateValueLabel
     }()
     
-    
     lazy var datePicker: UIDatePicker = {
         let datePicker = UIDatePicker()
         datePicker.toAutoLayout()
@@ -102,6 +100,16 @@ class HabitViewController: UIViewController {
         datePicker.preferredDatePickerStyle = UIDatePickerStyle.wheels
         datePicker.addTarget(self, action: #selector(datePickerTap), for: .valueChanged)
         return datePicker
+    }()
+    
+    let deleteHabitButton: UIButton = {
+        let deleteHabitButton = UIButton()
+        deleteHabitButton.toAutoLayout()
+        deleteHabitButton.setTitle("Удалить привычку", for: .normal)
+        deleteHabitButton.titleLabel?.font = .systemFont(ofSize: 17)
+        deleteHabitButton.setTitleColor(UIColor(red: 1.00, green: 0.23, blue: 0.19, alpha: 1.00), for: .normal)
+        deleteHabitButton.addTarget(self, action: #selector(deleteTap), for: .touchUpInside)
+        return deleteHabitButton
     }()
     
     init(_ editHabit: Habit?) {
@@ -115,10 +123,10 @@ class HabitViewController: UIViewController {
             date = habitSource.date
             pickerButton.backgroundColor = habitSource.color
             nameTextField.text = habitSource.name
-            //deleteButton.isHidden = false
+            deleteHabitButton.isHidden = false
             title = "Править"
         } else {
-            //deleteButton.isHidden = true
+            deleteHabitButton.isHidden = true
             title = "Создать"
         }
     }
@@ -129,7 +137,6 @@ class HabitViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Сохранить", style: .done, target: self, action: #selector(saveHabit))
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Отменить", style: .plain, target: self, action: #selector(cancelHabit))
         
@@ -137,10 +144,9 @@ class HabitViewController: UIViewController {
         view.addSubview(scrollView)
         
         scrollView.contentSize = CGSize(width: view.frame.width, height: view.frame.height)
-        scrollView.addSubviews(nameLabel, nameTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker)
+        scrollView.addSubviews(nameLabel, nameTextField, colorLabel, pickerButton, dateLabel, selectDate, dateValueLabel, datePicker, deleteHabitButton)
         
         initialLayout()
-        
     }
     
     //MARK: Initial Layout
@@ -183,13 +189,14 @@ class HabitViewController: UIViewController {
                                      dateValueLabel.leadingAnchor.constraint(equalTo: selectDate.trailingAnchor),
                                      dateValueLabel.heightAnchor.constraint(equalToConstant: 22),
                                      
-                                     
                                      datePicker.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 215),
                                      datePicker.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor),
                                      datePicker.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor),
                                      datePicker.heightAnchor.constraint(equalToConstant: 216),
-                                     datePicker.widthAnchor.constraint(equalToConstant: scrollView.contentSize.width)
+                                     datePicker.widthAnchor.constraint(equalToConstant: scrollView.contentSize.width),
                                      
+                                     deleteHabitButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -18),
+                                     deleteHabitButton.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor)
                                     ])
     }
     
@@ -201,18 +208,23 @@ class HabitViewController: UIViewController {
         present(colorPickerVC, animated: true)
     }
     
+    //MARK: target tap datePicker
     @objc func datePickerTap( _ sender: UIDatePicker) {
         date = sender.date
     }
     
+    //MARK: target save button
     @objc func saveHabit() {
-        
         if let myHabit = habit {
             myHabit.name = nameTextField.text!
             myHabit.date = date
             myHabit.color = pickerButton.backgroundColor!
             HabitsStore.shared.save()
             HabitsViewController.collectionView.reloadData()
+            
+            let viewControllers = self.navigationController!.viewControllers
+            let lastTwoVC = viewControllers[viewControllers.count - 3]
+            self.navigationController?.popToViewController(lastTwoVC, animated: true)
             
         } else {
             let newHabit = Habit(name: nameTextField.text!, date: date, color: pickerButton.backgroundColor!)
@@ -221,17 +233,37 @@ class HabitViewController: UIViewController {
                 store.habits.append(newHabit)
                 HabitsViewController.collectionView.reloadData()
             }
-            
         }
         self.navigationController?.popViewController(animated: true)
     }
     
+    //MARK: target cancel button
     @objc func cancelHabit() {
         self.navigationController?.popViewController(animated: true)
     }
     
+    //MARK: delete habit in tap UIAlecrController
+    @objc func deleteTap() {
+        let alertController = UIAlertController(title: "Удалить привычку", message: "Вы хотите удалить привычку \"\(nameTextField.text ?? "Без имени")\"?", preferredStyle: .alert)
+        let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+        let deleteAction = UIAlertAction(title: "Удалить", style: .destructive) { (action) -> Void in
+            if let selfHabit = self.habit {
+                HabitsStore.shared.habits.removeAll(where: {$0 == selfHabit})
+                HabitsViewController.collectionView.reloadData()
+            }
+            HabitDetailsViewController.isDeleted = true
+            
+            let viewControllers = self.navigationController!.viewControllers
+            let lastTwoVC = viewControllers[viewControllers.count - 3]
+            self.navigationController?.popToViewController(lastTwoVC,animated:false)
+        }
+        alertController.addAction(cancelAction)
+        alertController.addAction(deleteAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
 }
 
+//MARK: Extension HabitViewController
 extension HabitViewController: UIColorPickerViewControllerDelegate {
     func colorPickerViewControllerDidFinish(_ viewController: UIColorPickerViewController) {
         let color = viewController.selectedColor

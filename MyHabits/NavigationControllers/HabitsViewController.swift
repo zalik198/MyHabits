@@ -8,15 +8,13 @@
 import UIKit
 
 class HabitsViewController: UIViewController {
-    
-    //var habitVC = HabitViewController()
-    
+        
+    //MARK: Initial views, labels and buttons
     static let layout: UICollectionViewFlowLayout = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumLineSpacing = 12
         layout.sectionInsetReference = .fromContentInset
-        
         layout.sectionInset = UIEdgeInsets(top: 16, left: 16, bottom: 16, right: 16)
         return layout
     }()
@@ -34,22 +32,18 @@ class HabitsViewController: UIViewController {
         navigationController?.navigationBar.backgroundColor = .white
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonItem.SystemItem.add, target: self, action: #selector(buttonTap))
-  
         
         HabitsViewController.collectionView.dataSource = self
         HabitsViewController.collectionView.delegate = self
         
         view.backgroundColor = UIColor(red: 0.95, green: 0.95, blue: 0.97, alpha: 1.00)
-        
         view.addSubview(HabitsViewController.collectionView)
         
         HabitsViewController.collectionView.register(HabitProgressViewCell.self, forCellWithReuseIdentifier: "habitProgress")
         HabitsViewController.collectionView.register(HabitCollectionViewCell.self, forCellWithReuseIdentifier: "habitViewCell")
         
         initialLayout()
-        
     }
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -57,9 +51,9 @@ class HabitsViewController: UIViewController {
         navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Сегодня"
-
     }
     
+    //MARK: Initial layout
     func initialLayout() {
         NSLayoutConstraint.activate([HabitsViewController.collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
                                      HabitsViewController.collectionView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -68,21 +62,20 @@ class HabitsViewController: UIViewController {
                                     ])
     }
     
+    //MARK: tap addButton
     @objc func buttonTap() {
         self.navigationController?.pushViewController(HabitViewController(nil), animated: false)
         HabitsViewController().navigationItem.title = "Создать"
         navigationController?.navigationBar.prefersLargeTitles = false
-        
     }
-    
 }
 
+//MARK: Extension HabitsViewController
 extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return HabitsStore.shared.habits.count + 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
@@ -94,7 +87,6 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
             cell.initialCell(habit: HabitsStore.shared.habits[indexPath.item - 1])
             return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -107,19 +99,13 @@ extension HabitsViewController: UICollectionViewDataSource, UICollectionViewDele
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if !(indexPath.item == 0) {
-                  guard let item = collectionView.cellForItem(at: indexPath) as? HabitCollectionViewCell else { return }
-            
-        
-            
-                  if let habit = item.habit {
-
-                      navigationController?.pushViewController(HabitDetailsViewController(habit), animated: false)
-                      navigationController?.navigationBar.prefersLargeTitles = false
-
-                      
-
-                  }
-              }
+            guard let item = collectionView.cellForItem(at: indexPath) as? HabitCollectionViewCell else { return }
+            if let habit = item.habit {
+                navigationController?.pushViewController(HabitDetailsViewController(habit), animated: false)
+                navigationController?.navigationBar.prefersLargeTitles = false
+                
+            }
+        }
     }
     
 }

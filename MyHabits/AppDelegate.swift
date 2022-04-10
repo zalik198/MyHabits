@@ -9,8 +9,8 @@ import UIKit
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+    
+    
     var window: UIWindow?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -22,9 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let habitsViewController = HabitsViewController()
         let habitsNavigationController = UINavigationController(rootViewController: habitsViewController)
         habitsNavigationController.tabBarItem = UITabBarItem(title: "Привычки", image: UIImage(named: "habitsIcon"), selectedImage: nil)
-        
         habitsViewController.view.backgroundColor = .white
-
         
         let infoViewController = InfoViewController()
         let infoNavigationController = UINavigationController(rootViewController: infoViewController)
@@ -44,19 +42,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().tintColor = constPurpleColor
         UITabBar.appearance().tintColor = constPurpleColor
         
-    
-        
-        
-        
-        
         self.window?.rootViewController = tabBarController
         self.window?.makeKeyAndVisible()
         return true
         
-        
     }
-
-
-
+    
 }
 

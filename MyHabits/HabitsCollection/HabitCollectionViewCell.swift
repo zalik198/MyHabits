@@ -11,6 +11,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
     
     var habit: Habit?
     
+    //MARK: Initial views, labels and buttons
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.toAutoLayout()
@@ -53,6 +54,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         contentView.addSubviews(nameLabel, dateLabel, countLabel, checkMark)
     }
     
+    //MARK: Initial edit habit on tap habitCollection
     func initialCell(habit: Habit) {
         self.habit = habit
         nameLabel.text = habit.name
@@ -80,6 +82,7 @@ class HabitCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: Initial layout
     func initialLayout() {
         NSLayoutConstraint.activate([nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
                                      nameLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),

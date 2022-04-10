@@ -8,7 +8,8 @@
 import UIKit
 
 class HabitTableViewCell: UITableViewCell {
-
+    
+    //MARK: Initial labels and buttons
     lazy var dateLabel: UILabel = {
         let dateLabel = UILabel()
         dateLabel.toAutoLayout()
@@ -25,20 +26,17 @@ class HabitTableViewCell: UITableViewCell {
         return checkmarkLabel
     }()
     
-    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
          super.init(style: style, reuseIdentifier: reuseIdentifier)
-         
          contentView.addSubviews(dateLabel, checkmarkLabel)
          initialLayout()
-         
      }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    
+    //MARK: Initial layout
     func initialLayout() {
         NSLayoutConstraint.activate([dateLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
                                      dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -46,16 +44,12 @@ class HabitTableViewCell: UITableViewCell {
                                      checkmarkLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 11),
                                      checkmarkLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -14),
                                      checkmarkLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -11)
-
-            
                                     ])
     }
     
     func initialEdit(date: Date, check: Bool) {
-        
         let today = Calendar.current.dateComponents([.day], from: Date())
         let activDay = Calendar.current.dateComponents([.day], from: date)
-        
         if let day = today.day {
             if day == activDay.day {
                 dateLabel.text = "Сегодня"
